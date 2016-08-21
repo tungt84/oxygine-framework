@@ -444,8 +444,10 @@ namespace oxygine
         _renderTextureHook(alpha);
 
         spNativeTexture base = base_;
-        if (base == 0 || base->getHandle() == 0)
-            base = white;
+        OX_ASSERT(base && base->getHandle());
+        OX_ASSERT(!alpha || alpha->getHandle());
+        //if (base == 0 || base->getHandle() == 0)
+        //    base = white;
 
         unsigned int shaderFlags = _shaderFlags;
 
@@ -480,8 +482,9 @@ namespace oxygine
     void STDRenderer::setTexture(const spNativeTexture& base_, bool basePremultiplied)
     {
         spNativeTexture base = base_;
-        if (base == 0 || base->getHandle() == 0)
-            base = white;
+        OX_ASSERT(base && base->getHandle());
+        //if (base == 0 || base->getHandle() == 0)
+        //    base = white;
 
         unsigned int shaderFlags = _shaderFlags;
 

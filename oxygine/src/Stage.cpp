@@ -117,9 +117,9 @@ namespace oxygine
 
     RectF Stage::getDestRect() const
     {
-        OX_ASSERT(0);
         Vector2 s = getSize() + getPosition();
-        return RectF(-getPosition(), s);
+        RectF r = calcDestRectF(RectF(-getPosition(), s), s);
+        return r;
     }
 
     /*

@@ -224,20 +224,12 @@ namespace oxygine
 
     }
 
-    void Sprite::sizeChanged(const Vector2& size)
-    {
-        Actor::sizeChanged(size);
-        const Vector2& sz = _frame.getSize();
-        _localScale.x = size.x / sz.x;
-        _localScale.y = size.y / sz.y;
-    }
-
     RectF Sprite::getDestRect() const
     {
-        RectF r = _frame.getDestRect();
-        r.pos = r.pos.mult(_localScale);
-        r.size = r.size.mult(_localScale);
-        return r;
+        if (_frame.getDiffuse().base)
+            return calcDestRectF(_frame.getDestRect(), _frame.getSize());
+
+        return Actor::getDestRect();
     }
 
 

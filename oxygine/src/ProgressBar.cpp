@@ -351,7 +351,7 @@ namespace oxygine
 
     RectF ProgressBar::getDestRect() const
     {
-        return _frame.getDestRect();
+        return calcDestRectF(_frame.getDestRect(), _frame.getSize());
     }
 
     void ProgressBar::setProgress(float f)

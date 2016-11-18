@@ -134,7 +134,7 @@ namespace oxygine
         btn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &DebugActor::_btnClicked));
     }
 
-    DebugActor::DebugActor(): _frames(0), _startTime(0), _showTexel2PixelErrors(false), _showTouchedActor(false)
+    DebugActor::DebugActor(): _frames(0), _startTime(0), _showTexel2PixelErrors(false), _showTouchedActor(false), _dragging(false)
     {
         DebugActor::initialize();
 
@@ -208,7 +208,10 @@ namespace oxygine
 
     void DebugActor::onAdded2Stage()
     {
+        _dragging = false;
         _stage->addEventListener(TouchEvent::MOVE, CLOSURE(this, &DebugActor::onDAEvent));
+        _stage->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onDAEvent));
+        _stage->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &DebugActor::onDAEvent));
     }
 
     void DebugActor::onRemovedFromStage()
@@ -417,9 +420,8 @@ namespace oxygine
                 break;
         }
 
-        setPosition(pos);
+        //setPosition(pos);
         setScale(1.0f / getStage()->getScaleX());
-
 
         RenderState rs = parentRS;
         parentRS.material->finish();
@@ -477,8 +479,33 @@ namespace oxygine
     void DebugActor::onDAEvent(Event* ev)
     {
         TouchEvent* t = safeCast<TouchEvent*>(ev);
-        Vector2 loc = stage2local(t->localPosition, _getStage());
-        setAlpha(isOn(loc) ? 64 : 255);
+        Vector2 loc = parent2local(t->localPosition);
+        if (t->type == TouchEvent::MOVE)
+        {
+            setAlpha(isOn(loc) ? 64 : 255);
+
+            if (_dragging)
+            {
+                Transform tr = getTransform();
+                tr.x = 0;
+                tr.y = 0;
+                Vector2 p = tr.transform(_local);
+                setPosition(t->localPosition - p);
+            }
+        }
+
+        if (t->type == TouchEvent::TOUCH_DOWN)
+        {
+            if (isOn(loc))
+            {
+                _local = loc;
+                _dragging = true;
+            }
+        }
+        if (t->type == TouchEvent::TOUCH_UP)
+        {
+            _dragging = false;
+        }
     }
 
     void DebugActor::onEvent(Event* ev)

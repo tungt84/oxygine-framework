@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "math/Rect.h"
 #include "core/Texture.h"
 #include "core/NativeTexture.h"
@@ -61,6 +61,7 @@ namespace oxygine
         void            setResAnim(ResAnim* rs) {_resAnim = rs;}
         void            setDiffuse(const Diffuse& d) { _diffuse = d; }
         void            setSize(const Vector2& size) {_frameSize = size;}
+        void            setSize(float w, float h) { setSize(Vector2(w, h)); }
         void            setHitTestData(const HitTestData& ad) { _hittest = ad; }
         void            setRow(int v) {_row = v;}
         void            setColumn(int v) {_column = v;}

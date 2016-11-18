@@ -5,6 +5,7 @@
 //#include "Draggable.h"
 #include "initActor.h"
 #include "Serialize.h"
+#include "Stage.h"
 
 namespace oxygine
 {
@@ -323,20 +324,21 @@ namespace oxygine
                     if (_holded && (d >= _rad * _rad))
                     {
                         spActor act = safeSpCast<Actor>(_holded);
+
                         while (act && act.get() != _content.get())
                         {
-                            act->setNotPressed();
+                            for (int i = 0; i < MouseButton_Num; ++i)
+                                act->setNotPressed((MouseButton)i);
+
+
+                            TouchEvent ev(TouchEvent::TOUCH_UP, true, Vector2(-100000, -100000));
+                            ev.index = te->index;
+                            ev.bubbles = false;
+                            act->dispatchEvent(&ev);
+
+
                             act = act->getParent();
                         }
-
-
-                        TouchEvent ev(TouchEvent::TOUCH_UP, true, Vector2(-100000, -100000));
-
-                        _ignoreTouchUp = true;
-                        _drag.setIgnoreTouchUp(true);
-                        _holded->dispatchEvent(&ev);
-                        _drag.setIgnoreTouchUp(false);
-                        _ignoreTouchUp = false;
 
                         _holded = 0;
                     }

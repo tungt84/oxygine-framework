@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Sprite.h"
 
 namespace oxygine
@@ -43,10 +43,11 @@ namespace oxygine
 
         typedef Property<float, float, ProgressBar, &ProgressBar::getProgress, &ProgressBar::setProgress> TweenProgress;
 
+        RectF getDestRect() const;
+
     private:
         void doRender(const RenderState& rs);
 
-        RectF getDestRect() const OVERRIDE;
         virtual void _update();
 
         void animFrameChanged(const AnimationFrame& f);

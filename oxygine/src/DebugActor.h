@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Actor.h"
 
 
@@ -62,6 +62,9 @@ namespace oxygine
 
         bool _showTouchedActor;
         bool _showTexel2PixelErrors;
+
+        bool _dragging;
+        Vector2 _local;
 
         void onEvent(Event* ev);
         void onDAEvent(Event* ev);

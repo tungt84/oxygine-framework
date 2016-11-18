@@ -1,6 +1,7 @@
 #pragma once
-#ifndef OXYGINE_INCLUDE
-#define OXYGINE_INCLUDE
+#ifndef OXYGINE_INCLUDE_HEADER
+#define OXYGINE_INCLUDE_HEADER
+
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
@@ -176,4 +177,5 @@ namespace oxygine
     void fastFree(void* data);
 }
 
-#endif //OXYGINE_INCLUDE
+#include "oxygine-forwards.h"
+#endif

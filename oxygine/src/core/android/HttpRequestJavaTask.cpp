@@ -70,7 +70,8 @@ namespace oxygine
             env->SetByteArrayRegion(jpost, 0, _postData.size(), (jbyte*)&_postData.front());
         }
 
-        _handle = env->NewGlobalRef(env->CallStaticObjectMethod(_jHttpRequestsClass, _jCreateRequestMethod, jurl, jfname, jpost, (jlong)this));
+        log::messageln("XXXXXXX hadle %lld", this);
+        _handle = env->NewGlobalRef(env->CallStaticObjectMethod(_jHttpRequestsClass, _jCreateRequestMethod, jurl, jfname, jpost, (jlong)(intptr_t)this));
     }
 
     void HttpRequestJavaTask::error_()
@@ -117,10 +118,11 @@ extern "C"
         task->complete_(array);
     }
 
-    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseProgress(JNIEnv* env, jlong handle, jint loaded, jint total)
+    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseProgress(JNIEnv* env, jlong handle)//, jint loaded, jint total)
     {
         oxygine::HttpRequestJavaTask* task = (oxygine::HttpRequestJavaTask*)handle;
-        task->progress_(loaded, total);
+        oxygine::log::messageln("XXXXXXX hadle %d %lld %lld %lld", sizeof(jlong), task, (void*)&handle, handle);
+        task->progress_(0, 0);
     }
 
     JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseError(JNIEnv* env, jlong handle)

@@ -67,7 +67,7 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
 
     public static native void nativeHttpRequestResponseSuccess(long handle, byte[] data);
 
-    public static native void nativeHttpRequestResponseProgress(long handle);//, int loaded, int total);
+    public static native void nativeHttpRequestResponseProgress(long handle, int loaded, int total);
 
     public static native void nativeHttpRequestResponseError(long handle);
 
@@ -173,8 +173,7 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
             int total = 0;
             int count;
 
-			Log.v("HttpRequest", "passing progress request: " + String.valueOf(details.handle));
-            nativeHttpRequestResponseProgress(details.handle);//, 0, fileLength);
+            nativeHttpRequestResponseProgress(details.handle, 0, fileLength);
 
             while ((count = input.read(data)) != -1) {
                 // allow canceling with back button
@@ -189,7 +188,7 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
                 //if (fileLength > 0) // only if total length is known
                 //    publishProgress((int) (total * 100 / fileLength));
                 output.write(data, 0, count);
-                nativeHttpRequestResponseProgress(details.handle);//, total, fileLength);
+                nativeHttpRequestResponseProgress(details.handle, total, fileLength);
             }
             if (bt != null)
                 nativeHttpRequestResponseSuccess(details.handle, bt.toByteArray());
@@ -288,8 +287,6 @@ public class HttpRequests {
         details.url = url;
         details.postData = post;
         details.handle = handle;
-
-        Log.v("HttpRequest", "creating request: " + String.valueOf(handle));
 
         return _handler.createRequest(details);
     }

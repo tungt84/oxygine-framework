@@ -31,6 +31,7 @@
 #define HAVE_NPOT_RT()  (true)
 #endif
 
+#define OX_SPRITE_NO_LOCAL_SCALE 1
 //#define OXYGINE_NO_YEILD 1
 
 // Bypass SDL file functions and use plain fopen, fread etc.

@@ -22,8 +22,6 @@ namespace oxygine
         StretchMode getVerticalMode() const {return _vertMode;}
         StretchMode getHorizontalMode() const {return _horzMode;}
 
-        bool isOn(const Vector2& localPosition);
-
         void setVerticalMode(StretchMode m);
         void setHorizontalMode(StretchMode m);
 
@@ -33,6 +31,8 @@ namespace oxygine
         void setGuides(float x1, float x2, float y1, float y2);
         void setVerticalGuides(float x1, float x2);
         void setHorizontalGuides(float y1, float y2);
+
+        bool isOn(const Vector2& localPosition, float localScale) OVERRIDE;
 
         std::string dump(const dumpOptions&) const;
 

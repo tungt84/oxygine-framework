@@ -11,6 +11,9 @@ namespace oxygine
     {
         INHERITED(VStyleActor);
     public:
+        static void setDefaultFont(ResFont*);
+        static ResFont* getDefaultFont();
+
         DECLARE_COPYCLONE_NEW(TextField);
         TextField();
         ~TextField();
@@ -21,13 +24,11 @@ namespace oxygine
         /**Returns current text style*/
         const TextStyle&            getStyle() const {return _style;}
         /**Returns text bounds*/
-        const Rect&                 getTextRect() const;
+        const Rect&                 getTextRect(float localScale = 1.0f) const;
         /**Returns current text*/
         const std::string&          getText() const { return _text; }
         const ResFont*              getFont() const;
-        /**deprecated use getFontSize*/
-        OXYGINE_DEPRECATED
-        int                         getFontSize2Scale() const;
+
         int                         getFontSize() const;
         int                         getLinesOffset() const;
         int                         getKerning() const;
@@ -38,8 +39,10 @@ namespace oxygine
         text::Symbol*               getSymbolAt(int pos) const;
         const Color&                getOutlineColor() const;
         float                       getOutline() const;
+        const Color&                getStyleColor() const;
         float                       getWeight() const;
         float                       getBaselineScale() const;
+        unsigned int                getOptions() const;
 
 
         bool getBounds(RectF&) const OVERRIDE;
@@ -59,11 +62,12 @@ namespace oxygine
         void setBaselineScale(float scale);
         /**Overwrites TextStyle kerning*/
         void setKerning(int kerning);
-        /**Overwrites TextStyle scale2Size. deprecated, use setFontSize*/
-        OXYGINE_DEPRECATED
-        void setFontSize2Scale(int scale2size);
         /**Overwrites TextStyle fontSize*/
         void setFontSize(int size);
+        /**Overwrites TextStyle color*/
+        void setStyleColor(const Color&);
+        /**Overwrites TextStyle options*/
+        void setOptions(unsigned int opt);
 
         /**Overwrites TextStyle font.*/
         void setFont(const ResFont* rs);
@@ -88,7 +92,7 @@ namespace oxygine
         void setHtmlText(const std::string& str);
         void setHtmlText(const std::wstring& str);
 
-        bool isOn(const Vector2& localPosition);
+        bool isOn(const Vector2& localPosition, float localScale = 1.0f) OVERRIDE;
 
 
         typedef Property<Color, const Color&, TextField, &TextField::getOutlineColor, &TextField::setOutlineColor>  TweenOutlineColor;
@@ -99,7 +103,7 @@ namespace oxygine
         std::string dump(const dumpOptions& options) const;
         void doRender(RenderState const& parentRenderState);
 
-        text::Node* getRootNode();
+        text::Node* getRootNode(float scale);
     protected:
         enum
         {
@@ -111,6 +115,8 @@ namespace oxygine
 
         text::Node* _root;
         Rect _textRect;
+        float _rtscale;
+        int _realFontSize;
 
 
         void needRebuild();

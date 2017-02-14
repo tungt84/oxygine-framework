@@ -37,5 +37,7 @@
     <ClInclude Include="..\src\TestEdges.h" />
     <ClInclude Include="..\src\TestTweenPostProcessing.h" />
     <ClInclude Include="..\src\TestSignedDistanceFont.h" />
+    <ClInclude Include="..\src\TestCamera.h" />
+    <ClInclude Include="..\src\TestTiled.h" />
   </ItemGroup>
 </Project>

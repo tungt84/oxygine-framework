@@ -4,6 +4,7 @@
 #include "Serialize.h"
 #include "Material.h"
 #include "STDRenderer.h"
+#include "STDMaterial.h"
 
 namespace oxygine
 {
@@ -95,6 +96,8 @@ namespace oxygine
                 newSrc.size.y = newSrc.size.y * _progress;
                 newDest.size.y = newDest.size.y * _progress;
                 break;
+            default:
+                break;
         }
 
         Vector2 newSize = _originalFrame.getSize() * _progress;
@@ -111,13 +114,12 @@ namespace oxygine
         }
 
 
-
         Material::setCurrent(rs.material);
         //rs.material->doRender(this, rs);
         ///*
 
-        //STDRenderer* renderer = safeCast<STDRenderer*>(rs.renderer);
-        STDRenderer* renderer = STDRenderer::instance;
+        STDRenderer* renderer = safeCast<STDMaterial*>(rs.material)->getRenderer();
+        //STDRenderer* renderer = STDRenderer::instance;
 
         const Diffuse& df = _frame.getDiffuse();
         if (df.base)
@@ -341,6 +343,8 @@ namespace oxygine
                 break;
             case __dir_radial_ccw:
                 dir = "dir_radial_ccw";
+                break;
+            default:
                 break;
         }
         stream << " direction=" << dir << "";

@@ -197,7 +197,7 @@ namespace oxygine
         return size;
     }
 
-    HttpRequestTaskCURL::HttpRequestTaskCURL() : _easy(0), _handle(0)
+    HttpRequestTaskCURL::HttpRequestTaskCURL() : _easy(0), _handle(0), _httpHeaders(0)
     {
         _easy = curl_easy_init();
     }
@@ -211,7 +211,11 @@ namespace oxygine
         if (_easy)
             curl_easy_cleanup(_easy);
         _easy = 0;
+
+        if (_httpHeaders)
+            curl_slist_free_all(_httpHeaders);
     }
+
 
     void HttpRequestTaskCURL::_run()
     {
@@ -224,34 +228,17 @@ namespace oxygine
         curl_easy_setopt(_easy, CURLOPT_FOLLOWLOCATION, true);
         curl_easy_setopt(_easy, CURLOPT_NOPROGRESS, 0);
 
-        //curl_slist *header = curl_slist_append(0, "hello");
-        //curl_easy_setopt(_easy, CURLOPT_HEADER, header);
 
         if (!_postData.empty())
         {
-            curl_slist* headers = NULL; // init to NULL is important
-            //headers = curl_slist_append(headers, "Accept:")
-            headers = curl_slist_append(headers, "Content-Type: text/plain");
-            curl_easy_setopt(_easy, CURLOPT_HTTPHEADER, headers);
-
-            //curl_easy_setopt(_easy, CURLOPT_PORT, 4002);
-
-
-            //curl_easy_setopt(_easy, CURLOPT_VERBOSE, 1);
-            //curl_easy_setopt(_easy, CURLOPT_POST, 1);
-            //_sendPostData.push_back(0);
-            //char *p = curl_escape(&_postData.front(), _postData.size());
-            //log::messageln("data: %s", p);
-            //log::messageln("data: %s", &_sendPostData.front());
-            //curl_easy_setopt(_easy, CURLOPT_POSTFIELDS, p);
-            //curl_easy_setopt(_easy, CURLOPT_TIMEOUT, 9999);
             curl_easy_setopt(_easy, CURLOPT_POSTFIELDS, &_postData.front());
             curl_easy_setopt(_easy, CURLOPT_POSTFIELDSIZE, _postData.size());
-
-            //curl_easy_setopt(_easy, CURLOPT_TCP_KEEPALIVE, 1);
         }
 
-        curl_easy_setopt(_easy, CURLOPT_HEADER, 0);
+        for (size_t i = 0; i < _headers.size(); ++i)
+            _httpHeaders = curl_slist_append(_httpHeaders, (_headers[i].first + ": " + _headers[i].second).c_str());
+
+        curl_easy_setopt(_easy, CURLOPT_HTTPHEADER, _httpHeaders);
 
         addRef();
         _messages.post(0, _easy, 0);

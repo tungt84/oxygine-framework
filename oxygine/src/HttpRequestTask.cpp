@@ -4,7 +4,12 @@
 
 namespace oxygine
 {
-    HttpRequestTask::createHttpRequestCallback _createRequestsCallback = 0;
+    HttpRequestTask* createNullHttpTask()
+    {
+        return 0;
+    }
+
+    HttpRequestTask::createHttpRequestCallback _createRequestsCallback = createNullHttpTask;
 
     spHttpRequestTask HttpRequestTask::create()
     {
@@ -55,7 +60,9 @@ namespace oxygine
 
     void HttpRequestTask::addHeader(const std::string& key, const std::string& value)
     {
-        OX_ASSERT(!"not implemented");
+        OX_ASSERT(!key.empty());
+
+        _headers.push_back(std::make_pair(key, value));
         _addHeader(key, value);
     }
 

@@ -42,7 +42,7 @@
 #include "SDL_video.h"
 #endif
 
-#ifdef __WIN32__
+#ifdef _WIN32
 #pragma comment(lib, "psapi.lib") // Added to support GetProcessMemoryInfo()
 #include <windows.h>
 #include <Psapi.h>
@@ -114,11 +114,6 @@ namespace oxygine
         resSystem = 0;
         file::unmount(&zp);
         zp.reset();
-    }
-
-    void DebugActor::setCornerPosition(int corner)
-    {
-        setCorner(corner);
     }
 
     void DebugActor::addButton(float& x, const char* name, const char* anim)
@@ -366,7 +361,7 @@ namespace oxygine
         s << "memory=" << mem / 1024 << "kb ";
 #endif
 
-#ifdef __WIN32__
+#ifdef _WIN32
         PROCESS_MEMORY_COUNTERS_EX pmc;
         GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc, sizeof(pmc));
         s << "memory=" << pmc.PrivateUsage / 1024 << "kb ";
@@ -516,7 +511,7 @@ namespace oxygine
         cr->setTouchEnabled(false);
         cr->setColor(Color(rand() % 255, rand() % 255, rand() % 255, 0));
         cr->setSize(actor->getSize());
-        cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->setDetachActor(true);
+        cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->detachWhenDone();
         actor->addChild(cr);
         std::string dmp = actor->dump(0);
         log::messageln(">>>>>>>>>>>>>>>>>>>>\ntouched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",

@@ -140,6 +140,18 @@ namespace oxygine
             env->CallStaticVoidMethod(_jUtils, m);
         }
         catch (const notFound&) {}
+
+        return true;
+    }
+
+    void            jniRestartApp()
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
+
+        jmethodID m = env->GetStaticMethodID(_jUtils, "restartApp", "()V");
+        JNI_NOT_NULL(m);
+        env->CallStaticVoidMethod(_jUtils, m);
     }
 
     void            jniMoveTaskToBack()

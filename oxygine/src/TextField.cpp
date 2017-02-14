@@ -16,20 +16,24 @@
 
 namespace oxygine
 {
+    static ResFont* _defaultFont = 0;
+    void TextField::setDefaultFont(ResFont* f)
+    {
+        _defaultFont = f;
+    }
+
+    ResFont* TextField::getDefaultFont()
+    {
+        return _defaultFont;
+    }
+
     TextField::TextField():
         _root(0),
-        _textRect(0, 0, 0, 0)
+        _textRect(0, 0, 0, 0),
+        _rtscale(1.0f)
     {
         _flags |= flag_rebuild;
-        _style.font = NULL;
-
-        if (DebugActor::resSystem)
-        {
-            if (ResFont* fnt = DebugActor::resSystem->getResFont("system"))
-            {
-                _style.font = fnt;
-            }
-        }
+        _style.font = _defaultFont;
     }
 
     TextField::~TextField()
@@ -44,14 +48,15 @@ namespace oxygine
         _text = src._text;
         _style = src._style;
         _root = 0;
+        _rtscale = 1.0f;
 
         _flags |= flag_rebuild;
         _textRect = src._textRect;
     }
 
-    bool TextField::isOn(const Vector2& localPosition)
+    bool TextField::isOn(const Vector2& localPosition, float localScale)
     {
-        Rect r = getTextRect();
+        Rect r = getTextRect(localScale);
         r.expand(Point(_extendedIsOn, _extendedIsOn), Point(_extendedIsOn, _extendedIsOn));
         return r.pointIn(Point((int)localPosition.x, (int)localPosition.y));
     }
@@ -97,14 +102,21 @@ namespace oxygine
         needRebuild();
     }
 
-    void TextField::setFontSize2Scale(int scale2size)
-    {
-        setFontSize(scale2size);
-    }
-
     void TextField::setFontSize(int size)
     {
         _style.fontSize = size;
+        needRebuild();
+    }
+
+    void TextField::setStyleColor(const Color& color)
+    {
+        _style.color = color;
+        needRebuild();
+    }
+
+    void TextField::setOptions(unsigned int opt)
+    {
+        _style.options = opt;
         needRebuild();
     }
 
@@ -116,6 +128,8 @@ namespace oxygine
     void TextField::setFont(const ResFont* font)
     {
         _style.font = font;
+        if (!_style.font)
+            _style.font = _defaultFont;
         needRebuild();
     }
 
@@ -163,6 +177,9 @@ namespace oxygine
         if (st.fontSize == 0)
             _style.fontSize = size;
 
+        if (!_style.font)
+            _style.font = _defaultFont;
+
         needRebuild();
     }
 
@@ -199,11 +216,6 @@ namespace oxygine
     void TextField::setHtmlText(const std::wstring& str)
     {
         setHtmlText(ws2utf8(str.c_str()));
-    }
-
-    int TextField::getFontSize2Scale() const
-    {
-        return _style.fontSize;
     }
 
     int            TextField::getFontSize() const
@@ -251,6 +263,11 @@ namespace oxygine
         return _style.outline;
     }
 
+    const oxygine::Color& TextField::getStyleColor() const
+    {
+        return _style.color;
+    }
+
     float TextField::getWeight() const
     {
         return _style.weight;
@@ -261,14 +278,19 @@ namespace oxygine
         return _style.baselineScale;
     }
 
-    text::Symbol* TextField::getSymbolAt(int pos) const
+    unsigned int TextField::getOptions() const
     {
-        return const_cast<TextField*>(this)->getRootNode()->getSymbol(pos);
+        return _style.options;
     }
 
-    const Rect& TextField::getTextRect() const
+    text::Symbol* TextField::getSymbolAt(int pos) const
     {
-        const_cast<TextField*>(this)->getRootNode();
+        return const_cast<TextField*>(this)->getRootNode(_rtscale)->getSymbol(pos);
+    }
+
+    const Rect& TextField::getTextRect(float localScale) const
+    {
+        const_cast<TextField*>(this)->getRootNode(localScale);
         return _textRect;
     }
 
@@ -279,10 +301,19 @@ namespace oxygine
     }
 
 
-    text::Node* TextField::getRootNode()
+    text::Node* TextField::getRootNode(float globalScale)
     {
-        if ((_flags & flag_rebuild) && _style.font)
+        if (!_style.font)
+            return _root;
+
+
+        float scale = 1.0f;
+        const Font* font = _style.font->getClosestFont(globalScale, _style.fontSize, scale);
+
+        if ((_flags & flag_rebuild || _rtscale != scale) && font)
         {
+            _rtscale = scale;
+            //_realFontSize = fontSize;
             delete _root;
 
             _flags &= ~flag_rebuild;
@@ -297,10 +328,7 @@ namespace oxygine
                 _root = new text::TextNode(_text.c_str());
             }
 
-            text::Aligner rd(_style);
-
-            rd.width = (int)getWidth();
-            rd.height = (int)getHeight();
+            text::Aligner rd(_style, font, scale, getSize());
             rd.begin();
             _root->resize(rd);
             rd.end();
@@ -327,6 +355,8 @@ namespace oxygine
                 return "bottom";
             case TextStyle::VALIGN_MIDDLE:
                 return "middle";
+            default:
+                break;
         }
         return "unknown";
     }

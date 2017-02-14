@@ -77,9 +77,9 @@ namespace oxygine
 
     extern int HIT_TEST_DOWNSCALE;
 
-    bool Sprite::isOn(const Vector2& localPosition)
+    bool Sprite::isOn(const Vector2& localPosition, float localScale)
     {
-        if (!Actor::isOn(localPosition))
+        if (!Actor::isOn(localPosition, localScale))
             return false;
 
         if (_extendedIsOn)
@@ -165,6 +165,12 @@ namespace oxygine
     {
         const ResAnim* rs = getResAnim();
         setAnimFrame(rs, column, row);
+    }
+
+    void Sprite::setLocalScale(const Vector2& s)
+    {
+        _localScale = s;
+        _setSize(_frame.getSize().mult(_localScale));
     }
 
     void Sprite::setResAnim(const ResAnim* resanim, int col, int row)
@@ -277,8 +283,18 @@ namespace oxygine
 
         setAttr(node, "flipX", isFlippedX(), false);
         setAttr(node, "flipY", isFlippedY(), false);
+        setAttrV2(node, "localScale", _localScale, Vector2(1, 1));
 
         node.set_name("Sprite");
+    }
+
+    Vector2 attr2Vector2(const pugi::xml_attribute& attr, const Vector2& def)
+    {
+        if (!attr)
+            return def;
+        Vector2 v;
+        sscanf(attr.as_string(""), "%f,%f", &v.x, &v.y);
+        return v;
     }
 
     void Sprite::deserialize(const deserializedata* data)
@@ -294,6 +310,11 @@ namespace oxygine
             AnimationFrame frame = data->factory->getFrame(res, col, row);
             setAnimFrame(frame);
         }
+
+
+        _localScale = attr2Vector2(node.attribute("localScale"), Vector2(1, 1));
+        _setSize(_frame.getSize().mult(_localScale));
+
 
         setFlipped(node.attribute("flipX").as_bool(false), node.attribute("flipY").as_bool(false));
     }

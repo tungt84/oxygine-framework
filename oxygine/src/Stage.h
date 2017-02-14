@@ -51,6 +51,7 @@ namespace oxygine
 #if OXYGINE_SDL
         void associateWithWindow(SDL_Window* wnd);
         SDL_Window* getAssociatedWindow() const;
+        static Stage* getStageFromWindow(SDL_Window* wnd);
 #endif
 
     protected:
@@ -59,7 +60,7 @@ namespace oxygine
 
         //bool _active;
 
-        bool isOn(const Vector2& localPosition);
+        bool isOn(const Vector2& localPosition, float localScale) OVERRIDE;
 
     private:
 

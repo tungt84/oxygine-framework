@@ -50,6 +50,13 @@ namespace oxygine
             return _window;
         return core::getWindow();
     }
+
+    Stage* Stage::getStageFromWindow(SDL_Window* wnd)
+    {
+        void* data = SDL_GetWindowData(wnd, "_");
+        return (Stage*)data;
+    }
+
 #endif
 
     Stage::~Stage()
@@ -109,7 +116,7 @@ namespace oxygine
         setPosition(_viewport.pos);
     }
 
-    bool Stage::isOn(const Vector2& localPosition)
+    bool Stage::isOn(const Vector2& localPosition, float localScale)
     {
         return true;
     }

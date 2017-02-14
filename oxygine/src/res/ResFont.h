@@ -15,6 +15,7 @@ namespace oxygine
         virtual bool isSDF(int& size) const { size = 0; return false; }
         int getSize() const { return _size; }
 
+        virtual const Font* getClosestFont(float worldScale, int styleFontSize, float& resScale) const;
     protected:
         int _size;
     };

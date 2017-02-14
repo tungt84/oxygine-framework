@@ -26,6 +26,8 @@ namespace oxygine
 
         bool isSDF(int& size) const OVERRIDE;
 
+        const Font* getClosestFont(float worldScale, int styleFontSize, float& resScale) const OVERRIDE;
+
     private:
         struct page
         {

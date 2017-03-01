@@ -25,6 +25,7 @@
 
 extern "C"
 {
+//!--pfngl-begin--!
     extern PFNGLSHADERSOURCEPROC _glShaderSource;
     extern PFNGLUSEPROGRAMPROC _glUseProgram;
     extern PFNGLVERTEXATTRIBPOINTERPROC _glVertexAttribPointer;
@@ -38,12 +39,12 @@ extern "C"
     extern PFNGLCREATEPROGRAMPROC _glCreateProgram;
     extern PFNGLATTACHSHADERPROC _glAttachShader;
     extern PFNGLCOMPILESHADERPROC _glCompileShader;
+    extern PFNGLDETACHSHADERPROC _glDetachShader;
     extern PFNGLBINDATTRIBLOCATIONPROC _glBindAttribLocation;
-    extern PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation;
     extern PFNGLLINKPROGRAMPROC _glLinkProgram;
     extern PFNGLUNIFORM1IPROC _glUniform1i;
-    extern PFNGLUNIFORM2FVPROC _glUniform2fv;
     extern PFNGLUNIFORM2FPROC _glUniform2f;
+    extern PFNGLUNIFORM2FVPROC _glUniform2fv;
     extern PFNGLUNIFORM3FVPROC _glUniform3fv;
     extern PFNGLUNIFORM4FVPROC _glUniform4fv;
     extern PFNGLUNIFORM1FPROC _glUniform1f;
@@ -69,6 +70,11 @@ extern "C"
     extern PFNGLDELETESHADERPROC _glDeleteShader;
     extern PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
     extern PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog;
+    extern PFNGLBLENDEQUATIONPROC _glBlendEquation;
+    extern PFNGLBLENDFUNCSEPARATEPROC _glBlendFuncSeparate;
+    extern PFNGLBLENDEQUATIONSEPARATEPROC _glBlendEquationSeparate;
+    extern PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation;
+//!--pfngl-end--!
 }
 
 #elif __ANDROID__
@@ -123,6 +129,8 @@ extern "C"
 #define PASTER(x,y) x ## y
 #define EVALUATOR(x,y)  PASTER(x,y)
 #define DECLARE_GLEXT(y)  EVALUATOR(GLPREF,y)
+
+//!--oxgl-begin--!
 #define oxglShaderSource DECLARE_GLEXT(glShaderSource)
 #define oxglUseProgram DECLARE_GLEXT(glUseProgram)
 #define oxglVertexAttribPointer DECLARE_GLEXT(glVertexAttribPointer)
@@ -136,12 +144,12 @@ extern "C"
 #define oxglCreateProgram DECLARE_GLEXT(glCreateProgram)
 #define oxglAttachShader DECLARE_GLEXT(glAttachShader)
 #define oxglCompileShader DECLARE_GLEXT(glCompileShader)
+#define oxglDetachShader DECLARE_GLEXT(glDetachShader)
 #define oxglBindAttribLocation DECLARE_GLEXT(glBindAttribLocation)
-#define oxglGetAttribLocation DECLARE_GLEXT(glGetAttribLocation)
 #define oxglLinkProgram DECLARE_GLEXT(glLinkProgram)
 #define oxglUniform1i DECLARE_GLEXT(glUniform1i)
-#define oxglUniform2fv DECLARE_GLEXT(glUniform2fv)
 #define oxglUniform2f DECLARE_GLEXT(glUniform2f)
+#define oxglUniform2fv DECLARE_GLEXT(glUniform2fv)
 #define oxglUniform3fv DECLARE_GLEXT(glUniform3fv)
 #define oxglUniform4fv DECLARE_GLEXT(glUniform4fv)
 #define oxglUniform1f DECLARE_GLEXT(glUniform1f)
@@ -167,6 +175,11 @@ extern "C"
 #define oxglDeleteShader DECLARE_GLEXT(glDeleteShader)
 #define oxglDeleteBuffers DECLARE_GLEXT(glDeleteBuffers)
 #define oxglGetProgramInfoLog DECLARE_GLEXT(glGetProgramInfoLog)
+#define oxglBlendEquation DECLARE_GLEXT(glBlendEquation)
+#define oxglBlendFuncSeparate DECLARE_GLEXT(glBlendFuncSeparate)
+#define oxglBlendEquationSeparate DECLARE_GLEXT(glBlendEquationSeparate)
+#define oxglGetAttribLocation DECLARE_GLEXT(glGetAttribLocation)
+//!--oxgl-end--!
 
 
 //#undef PASTER

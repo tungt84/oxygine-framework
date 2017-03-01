@@ -45,13 +45,14 @@ namespace oxygine
 
         void setFrame(int col, int row, const AnimationFrame& frame);
         void setFrameRate(int v) { _framerate = v; }
+        void removeFrames();
 
         operator const AnimationFrame& ();
 
     protected:
 
-        void _load(LoadResourcesContext* ctx = 0);
-        void _unload();
+        void _load(LoadResourcesContext* ctx = 0) override;
+        void _unload() override;
 
         int         _columns;
         Resource*   _atlas;

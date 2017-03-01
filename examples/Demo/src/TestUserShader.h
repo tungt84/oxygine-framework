@@ -40,7 +40,7 @@ private:
         driver->setUniform("userValue", &_val, 1);
     }
 
-    void doRender(const RenderState& rs)
+    void doRender(const RenderState& rs) override
     {
         /* _program->setShaderUniformsCallback(CLOSURE(this, &ShaderSprite::setUniforms));
          STDRenderer* renderer = safeCast<STDRenderer*>(rs.renderer);
@@ -64,18 +64,18 @@ public:
             _client->setMaterial(0);
     }
 
-    void _start(Actor& actor) OVERRIDE
+    void _start(Actor& actor) override
     {
         actor.setName("zzz");
         actor.setMaterial(this);
     }
 
-    void _update(Actor& actor, const UpdateState& us)
+    void _update(Actor& actor, const UpdateState& us) override
     {
         _val = lerp(Vector4(1, 1, 1, 0), Vector4(0, 0, 0, 0),  _percent);
     }
 
-    void _done(Actor& actor, const UpdateState& us)
+    void _done(Actor& actor, const UpdateState& us) override
     {
         actor.setMaterial(0);
     }
@@ -85,7 +85,7 @@ public:
         driver->setUniform("userValue", &_val, 1);
     }
 
-    void apply(Material* prev) OVERRIDE
+    void apply(Material* prev) override
     {
         STDRenderer* renderer = STDMaterial::instance->getRenderer();
         _program->setShaderUniformsCallback(CLOSURE(this, &TweenShader::setUniforms));
@@ -93,12 +93,12 @@ public:
         renderer->setUberShaderProgram(_program);
     }
 
-    void doRender(Sprite* s, const RenderState& rs) OVERRIDE
+    void doRender(Sprite* s, const RenderState& rs) override
     {
         STDMaterial::instance->doRender(s, rs);
     }
 
-    void finish() OVERRIDE
+    void finish() override
     {
         STDRenderer* renderer = STDMaterial::instance->getRenderer();
         renderer->drawBatch();

@@ -1,0 +1,7 @@
+build static lib for libpng and libjpeg
+cmake -DCMAKE_TOOLCHAIN_FILE=cmake/Toolchain-Tizen-x86.cmake -DBUILD_STATIC=ON
+
+
+run cmake oxygine 
+cmake -DCMAKE_TOOLCHAIN_FILE=cmake/Toolchain-Tizen-x86.cmake
+

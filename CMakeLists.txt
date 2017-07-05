@@ -140,14 +140,23 @@ if(TIZEN)
 set(OXYGINE_INCLUDE_DIRS 
 	${OXYGINE_INCLUDE_DIRS}
 	${OXYGINE_ROOT}/third_party/tizen/libpng/include
-	${OXYGINE_ROOT}/third_party/tizen/libjpeg/include)
+	${OXYGINE_ROOT}/third_party/tizen/libjpeg/include
+	${CMAKE_SYSROOT}/usr/include/evas-1
+	${CMAKE_SYSROOT}/usr/include/efl-1
+	${CMAKE_SYSROOT}/usr/include/eina-1
+	${CMAKE_SYSROOT}/usr/include/eina-1/eina
+	${CMAKE_SYSROOT}/usr/include/eo-1
+	${CMAKE_SYSROOT}/usr/include/emile-1)
 
 set(OXYGINE_LIBRARY_DIRS
 	${OXYGINE_LIBRARY_DIRS}
 	${OXYGINE_ROOT}/third_party/tizen/libpng/lib
 	${OXYGINE_ROOT}/third_party/tizen/libjpeg/lib)
+set(OX_DEFINITIONS
+	${OX_DEFINITIONS}
+	-DTIZEN)
 endif()
-message(${OXYGINE_INCLUDE_DIRS})
+
 
 if (FORCE_GLES)
 	set(OPENGL_LIBRARIES libGLESv2.lib)

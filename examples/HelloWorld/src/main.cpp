@@ -12,6 +12,10 @@
 
 using namespace oxygine;
 
+#ifdef TIZEN
+#include "Evas_GL_GLES2_Helpers.h"
+EVAS_GL_GLOBAL_GLES2_DEFINE();
+#endif
 
 // This function is called each frame
 int mainloop()

@@ -105,6 +105,16 @@ extern "C"
 #   include "GLES2/gl2.h"
 #   define GL_GLEXT_PROTOTYPES
 #   include "GLES2/gl2ext.h"
+#elif TIZEN
+#   define GL_GLEXT_PROTOTYPES
+#   include "Evas_GL_GLES2_Helpers.h"
+    EVAS_GL_GLOBAL_GLES2_DECLARE();
+#   define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG                      0x8C00
+#   define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG                      0x8C01
+#   define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG                     0x8C02
+#   define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG                     0x8C03
+
+#   define GL_ETC1_RGB8_OES                                        0x8D64
 #elif __unix__
 #   define GL_GLEXT_PROTOTYPES
 #   include "SDL_opengl.h"

@@ -136,6 +136,18 @@ set(OXYGINE_LIBRARY_DIRS
 	${OXYGINE_SOURCE_DIR}/libs
 	${THIRD_PARTY}/libraries)
 
+if(TIZEN)
+set(OXYGINE_INCLUDE_DIRS 
+	${OXYGINE_INCLUDE_DIRS}
+	${OXYGINE_ROOT}/third_party/tizen/libpng/include
+	${OXYGINE_ROOT}/third_party/tizen/libjpeg/include)
+
+set(OXYGINE_LIBRARY_DIRS
+	${OXYGINE_LIBRARY_DIRS}
+	${OXYGINE_ROOT}/third_party/tizen/libpng/lib
+	${OXYGINE_ROOT}/third_party/tizen/libjpeg/lib)
+endif()
+message(${OXYGINE_INCLUDE_DIRS})
 
 if (FORCE_GLES)
 	set(OPENGL_LIBRARIES libGLESv2.lib)

@@ -159,7 +159,11 @@ set(OXYGINE_INCLUDE_DIRS
 	${CMAKE_SYSROOT}/usr/include/edje-1
 	${CMAKE_SYSROOT}/usr/include/eldbus-1
 	${CMAKE_SYSROOT}/usr/include/efreet-1
-	${CMAKE_SYSROOT}/usr/include/ethumb-client-1)
+	${CMAKE_SYSROOT}/usr/include/ethumb-client-1
+	${CMAKE_SYSROOT}/usr/include/ethumb-1
+	${CMAKE_SYSROOT}/usr/include/system
+	${CMAKE_SYSROOT}/usr/include/efl-extension
+	${CMAKE_SYSROOT}/usr/include/dlog)
 
 set(OXYGINE_LIBRARY_DIRS
 	${OXYGINE_LIBRARY_DIRS}
@@ -169,6 +173,10 @@ set(OXYGINE_LIBRARY_DIRS
 set(OX_DEFINITIONS
 	${OX_DEFINITIONS}
 	-DTIZEN)
+
+set(CORE_LIBS 
+	${CORE_LIBS} 
+	BrokenLocale accounts-svc anl appcore-agent attach-panel badge base-utils-i18n bundle cairo calendar-service2 capi-appfw-alarm capi-appfw-app-common capi-appfw-app-control capi-appfw-application capi-appfw-app-manager capi-appfw-event capi-appfw-package-manager capi-appfw-preference capi-appfw-widget-application capi-base-common capi-content-media-content capi-content-mime-type capi-geofence-manager capi-maps-service capi-media-audio-io capi-media-camera capi-media-codec capi-media-controller capi-mediademuxer capi-media-image-util capi-media-metadata-editor capi-media-metadata-extractor capi-mediamuxer capi-media-player capi-media-radio capi-media-recorder capi-media-screen-mirroring capi-media-sound-manager capi-media-streamer capi-media-streamrecorder capi-media-thumbnail-util capi-media-tone-player capi-media-tool capi-media-video-util capi-media-vision capi-media-wav-player capi-messaging-email capi-messaging-messages capi-network-bluetooth capi-network-connection capi-network-http capi-network-mtp capi-network-nfc capi-network-smartcard capi-network-wifi-manager capi-network-wifi capi-system-device capi-system-info capi-system-media-key capi-system-runtime-info capi-system-sensor capi-system-system-settings capi-system-usbhost capi-telephony capi-ui-efl-util capi-ui-inputmethod-manager capi-ui-inputmethod capi-vpnsvc capi-web-url-download cbhm chromium-ewk cidn contacts-service2 context core-context-manager core-sync-client crypto crypt c csr-client curl dali-adaptor dali-core dali-toolkit data-control dlog dl dpm ebluez econnman0_7x ecore_buffer ecore_con ecore_evas ecore_file ecore_imf_evas ecore_imf ecore_input_evas ecore_input ecore_ipc ecore edbus edje eet efl-extension efreet_mime efreet efreet_trash ehal eina eio eldbus elementary embryo enotify eofono eom eo ethumb_client ethumb eukit evas exif feedback fido-client fontconfig freetype gio-2.0 glib-2.0 gmodule-2.0 gobject-2.0 gthread-2.0 harfbuzz-icu harfbuzz iotcon json-glib-1.0 key-manager-client message-port minicontrol-provider minicontrol-viewer minizip m notification nsd-dns-sd nsd-ssdp nsl nss_compat nss_dns nss_files nss_hesiod nss_nisplus nss_nis oauth2 oauth openal phonenumber-utils privilege-info pthread push resolv rt service-adaptor-client shortcut sqlite3 ssl storage stt_engine stt tbm thread_db ttrace tts_engine tts tzsh_common tzsh_quickpanel ui-viewmgr util vc-elm vc widget_service widget_viewer_dali widget_viewer_evas wifi-direct xml2 yaca)	
 endif()
 
 

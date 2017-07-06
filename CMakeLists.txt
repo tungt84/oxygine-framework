@@ -143,15 +143,29 @@ set(OXYGINE_INCLUDE_DIRS
 	${OXYGINE_ROOT}/third_party/tizen/libjpeg/include
 	${CMAKE_SYSROOT}/usr/include/evas-1
 	${CMAKE_SYSROOT}/usr/include/efl-1
-	${CMAKE_SYSROOT}/usr/include/eina-1
 	${CMAKE_SYSROOT}/usr/include/eina-1/eina
+	${CMAKE_SYSROOT}/usr/include/eina-1
 	${CMAKE_SYSROOT}/usr/include/eo-1
-	${CMAKE_SYSROOT}/usr/include/emile-1)
+	${CMAKE_SYSROOT}/usr/include/emile-1
+	${CMAKE_SYSROOT}/usr/include/appfw
+	${CMAKE_SYSROOT}/usr/include/elementary-1
+	${CMAKE_SYSROOT}/usr/include/eet-1
+	${CMAKE_SYSROOT}/usr/include/ecore-1
+	${CMAKE_SYSROOT}/usr/include/ecore-evas-1
+	${CMAKE_SYSROOT}/usr/include/ecore-file-1
+	${CMAKE_SYSROOT}/usr/include/ecore-input-1
+	${CMAKE_SYSROOT}/usr/include/ecore-imf-1
+	${CMAKE_SYSROOT}/usr/include/ecore-con-1
+	${CMAKE_SYSROOT}/usr/include/edje-1
+	${CMAKE_SYSROOT}/usr/include/eldbus-1
+	${CMAKE_SYSROOT}/usr/include/efreet-1
+	${CMAKE_SYSROOT}/usr/include/ethumb-client-1)
 
 set(OXYGINE_LIBRARY_DIRS
 	${OXYGINE_LIBRARY_DIRS}
 	${OXYGINE_ROOT}/third_party/tizen/libpng/lib
-	${OXYGINE_ROOT}/third_party/tizen/libjpeg/lib)
+	${OXYGINE_ROOT}/third_party/tizen/libjpeg/lib
+	${CMAKE_SYSROOT}/usr/lib)
 set(OX_DEFINITIONS
 	${OX_DEFINITIONS}
 	-DTIZEN)

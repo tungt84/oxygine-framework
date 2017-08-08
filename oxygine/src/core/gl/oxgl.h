@@ -109,6 +109,7 @@ extern "C"
 #   define GL_GLEXT_PROTOTYPES
 #   include "Evas_GL_GLES2_Helpers.h"
     EVAS_GL_GLOBAL_GLES2_DECLARE();
+#   include "SDL_opengl.h"
 #   define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG                      0x8C00
 #   define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG                      0x8C01
 #   define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG                     0x8C02
